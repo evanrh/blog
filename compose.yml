@@ -1,0 +1,39 @@
+services:
+  website:
+    build: ./
+    ports:
+      - 4321:4321
+    env_file: .env
+    networks:
+      - backend
+  cms:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_NAME: blog_db
+    networks:
+      - backend
+    volumes:
+      - cms:/var/www/html
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_DATABASE: blog_db
+      MARIADB_RANDOM_ROOT_PASSWORD: 1
+    networks:
+      - backend
+    volumes:
+      - db:/var/lib/mysql
+networks:
+  backend: {}
+volumes:
+  cms: {}
+  db: {}
