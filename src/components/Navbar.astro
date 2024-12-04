@@ -1,0 +1,22 @@
+---
+import HomeButton from "./HomeButton.astro";
+const options = [
+  ["/about", "About"],
+  ["/posts", "Blog"],
+];
+---
+
+<nav class="flex flex-col md:flex-row mx-auto max-w-2xl py-2 justify-between">
+  <HomeButton />
+  <ul class="flex flex-row justify-center">
+    {
+      options.map(([route, text]) => (
+        <li class="mx-2 list-none hover:underline hover:brightness-125">
+          <a class="text-blue-500" href={route}>
+            {text}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
