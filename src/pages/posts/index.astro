@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const res = await fetch(
+  "http://localhost:8080/wp-json/wp/v2/posts?context=embed",
+);
+const posts = await res.json();
+---
+
+<BaseLayout title="Blog" description="Evan's musings">
+  {
+    posts.map((post: any) => (
+      <>
+        <h2 set:html={post.title.rendered} />
+        <p set:html={post.content.rendered} />
+      </>
+    ))
+  }
+</BaseLayout>

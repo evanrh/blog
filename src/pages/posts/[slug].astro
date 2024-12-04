@@ -1,0 +1,11 @@
+---
+export const prerender = false;
+const { slug } = Astro.params;
+const res = await fetch(`http://localhost:8080/wp-json/wp/v2/posts/${slug}`);
+const post = await res.json();
+---
+
+<div>
+  <h2 set:html={post.title.rendered} />
+  <p set:html={post.content.rendered} />
+</div>
