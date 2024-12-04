@@ -2,7 +2,7 @@ services:
   website:
     build: ./
     ports:
-      - 4321:4321
+      - 8000:4321
     env_file: .env
     networks:
       - backend
