@@ -1,19 +1,13 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
+export const prerender = false;
 
-const res = await fetch(
-  "http://localhost:8080/wp-json/wp/v2/posts?context=embed",
-);
-const posts = await res.json();
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostExcerptCard from "../../layouts/PostExcerptCard.astro";
+import { getAllPosts } from "../../lib/wordpress";
+
+const posts = await getAllPosts();
 ---
 
 <BaseLayout title="Blog" description="Evan's musings">
-  {
-    posts.map((post: any) => (
-      <>
-        <h2 set:html={post.title.rendered} />
-        <p set:html={post.content.rendered} />
-      </>
-    ))
-  }
+  {posts.map((post) => <PostExcerptCard post={post} />)}
 </BaseLayout>

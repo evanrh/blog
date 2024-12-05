@@ -1,0 +1,19 @@
+---
+import type { EmbedPost } from "../lib/wordpress";
+
+interface Props {
+  post: EmbedPost;
+}
+
+const { post } = Astro.props;
+---
+
+<section class="pb-3 my-2 px-2 rounded border border-gray-200">
+  <a
+    class="text-blue-400 underline visited:text-purple-400"
+    href={`/posts/${post.slug}`}
+  >
+    <h2 class="text-xl" set:html={post.title.rendered} />
+  </a>
+  <p class="" set:html={post.excerpt.rendered} />
+</section>
