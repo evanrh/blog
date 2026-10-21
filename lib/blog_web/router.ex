@@ -14,10 +14,20 @@ defmodule BlogWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :feed do
+    plug :accepts, ["html", "application/xml"]
+  end
+
   scope "/", BlogWeb do
     pipe_through :browser
 
     get "/", PageController, :home
+
+  end
+
+  scope "/", BlogWeb do
+    pipe_through :feed
+    get "/feed", FeedController, :rss
   end
 
   # Other scopes may use custom stacks.
